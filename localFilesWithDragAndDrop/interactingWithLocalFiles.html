@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>HTML5 Interacting with Local Files</title>
+  <style>
+    body {
+      background-color: #ddd;
+      font-family: arial, verdana, sans-serif;
+    }
+
+    #drop1 {
+      width: 200px;
+      height: 200px;
+      border: 1px solid black;
+      background-color: white;
+    }
+  </style>
+  <script>
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+// This drop function is modified to allow a list of files to be dragged into
+// a webpage from the local file system.
+    function drop(ev) {
+      // Here, the array-like "FileList" containing information about the dragged files
+      // is extracted from the "dataTransfer" object:
+      var files = ev.dataTransfer.files;
+      // Then, each file is processed in turn by iterating through them individually:
+      for (var i=0; i<files.length; i++) {
+        var f = files[i];
+        var pnode = document.createElement("p");
+        var tnode = document.createTextNode(f.name + " (" + f.type + ") " + f.size + " bytes");
+        pnode.appendChild(tnode);
+        ev.target.appendChild(pnode);
+      }
+      ev.preventDefault();
+    }
+    window.onload = function() {
+      var drophere = document.getElementById("drop1");
+      drophere.ondragover = allowDrop;
+      drophere.ondrop = drop;
+    }
+  </script>
+</head>
+
+<body>
+  <div id="drop1"></div>
+  <p>
+    Drag a file into the box above:
+  </p>
+
+</body>
+
+</html>
